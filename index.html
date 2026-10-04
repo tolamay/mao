@@ -1,10 +1,8 @@
-```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Có lẽ tôi đã cảm nắng một cô gái</title>
 
     <style>
@@ -17,7 +15,7 @@
         body {
             min-height: 100vh;
             overflow: hidden;
-            font-family: "Segoe UI", sans-serif;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
             background:
                 radial-gradient(circle at 50% 40%,
@@ -47,7 +45,6 @@
                 transform: translate(-50%, -50%) scale(0.9);
                 opacity: 0.5;
             }
-
             to {
                 transform: translate(-50%, -50%) scale(1.2);
                 opacity: 1;
@@ -76,7 +73,7 @@
         #text {
             min-height: 150px;
 
-            font-size: clamp(25px, 4vw, 45px);
+            font-size: clamp(25px, 4vw, 42px);
             line-height: 1.6;
 
             font-weight: 300;
@@ -87,23 +84,35 @@
                 0 0 30px rgba(255, 80, 140, 0.3);
 
             opacity: 0;
-            transition: opacity 1.5s ease;
+            transform: translateY(10px);
+            transition: opacity 1s ease, transform 1s ease;
         }
 
         #text.show {
             opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dòng cuối cùng đặc biệt */
+        #text.final {
+            font-size: clamp(28px, 5vw, 52px) !important;
+            font-weight: 400 !important;
+            color: #ffabc4;
+
+            text-shadow:
+                0 0 12px #ff7fa8,
+                0 0 35px rgba(255, 80, 140, 0.8);
         }
 
         /* Nút */
         button {
             margin-top: 45px;
-
             padding: 13px 32px;
 
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 30px;
 
-            background: rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.08);
             color: white;
 
             font-size: 16px;
@@ -111,55 +120,57 @@
 
             backdrop-filter: blur(10px);
 
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            outline: none;
         }
 
         button:hover {
             background: rgba(255, 100, 150, 0.25);
             transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255,100,150,0.3);
+            box-shadow: 0 0 25px rgba(255, 100, 150, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Chữ ký / Biểu tượng cuối */
+        .signature {
+            margin-top: 25px;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.85);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 2s ease, transform 2s ease;
+        }
+
+        .signature.show {
+            opacity: 1;
+            transform: scale(1);
         }
 
         /* Tim bay */
         .heart {
             position: fixed;
             bottom: -30px;
-
             color: #ff7fa8;
-
             font-size: 18px;
-
             pointer-events: none;
-
             animation: fly linear forwards;
-
             z-index: 2;
-
             text-shadow: 0 0 10px #ff477e;
         }
 
         @keyframes fly {
             0% {
-                transform:
-                    translateY(0)
-                    translateX(0)
-                    scale(0.5)
-                    rotate(0deg);
-
+                transform: translateY(0) translateX(0) scale(0.5) rotate(0deg);
                 opacity: 0;
             }
-
             15% {
                 opacity: 1;
             }
-
             100% {
-                transform:
-                    translateY(-110vh)
-                    translateX(var(--move))
-                    scale(1.4)
-                    rotate(360deg);
-
+                transform: translateY(-110vh) translateX(var(--move)) scale(1.4) rotate(360deg);
                 opacity: 0;
             }
         }
@@ -169,61 +180,24 @@
             position: fixed;
             width: 2px;
             height: 2px;
-
             background: white;
             border-radius: 50%;
-
             opacity: 0.5;
-
             animation: twinkle 3s infinite alternate;
         }
 
         @keyframes twinkle {
-            from {
-                opacity: 0.15;
-            }
-
-            to {
-                opacity: 0.8;
-            }
-        }
-
-        /* Dòng cuối */
-        .final {
-            font-size: clamp(28px, 5vw, 55px) !important;
-            font-weight: 400 !important;
-            color: #ffabc4;
-
-            text-shadow:
-                0 0 10px #ff7fa8,
-                0 0 35px rgba(255,80,140,0.7);
-        }
-
-        .signature {
-            margin-top: 30px;
-
-            font-size: 17px;
-
-            color: rgba(255,255,255,0.65);
-
-            opacity: 0;
-
-            transition: 2s;
-        }
-
-        .signature.show {
-            opacity: 1;
+            from { opacity: 0.15; }
+            to { opacity: 0.85; }
         }
 
         /* Mobile */
         @media (max-width: 600px) {
-
             #text {
-                font-size: 25px;
+                font-size: 22px;
             }
-
             button {
-                margin-top: 30px;
+                margin-top: 35px;
             }
         }
     </style>
@@ -234,51 +208,35 @@
     <div class="glow"></div>
 
     <div class="container">
-
         <div id="text"></div>
 
         <div class="signature" id="signature">
-            ❤️
+            ✨ ❤️ ✨
         </div>
 
         <button id="nextButton">
             Tiếp tục
         </button>
-
     </div>
 
     <script>
-
         /* ============================
            NỘI DUNG
         ============================ */
-
         const messages = [
-
             "Có lẽ tôi đã cảm nắng một cô gái…",
-
             "Không biết từ khi nào, ánh mắt của cô ấy cứ xuất hiện trong suy nghĩ của tôi.",
-
             "Tôi chẳng biết đó có phải là thích không…",
-
             "Chỉ là đôi khi, tôi lại vô thức tìm kiếm bóng dáng ấy giữa rất nhiều người.",
-
-            "Có những ngày chẳng có chuyện gì đặc biệt…",
-
-            "nhưng chỉ cần nhìn thấy cô ấy thôi, tự nhiên ngày hôm đó lại trở nên khác một chút.",
-
+            "Có những ngày tưởng chừng như rất bình thường…",
+            "nhưng chỉ cần nhìn thấy cô ấy thôi, tự nhiên ngày hôm đó lại trở nên ngọt ngào hơn một chút.",
             "Tôi cũng chẳng biết phải gọi cảm giác này là gì…",
-
             "Có lẽ là một chút rung động.",
-
-            "Một chút nhớ.",
-
+            "Một chút nhớ thương.",
             "Và một chút mong chờ…",
-
-            "chỉ biết mỗi lần cô ấy quay lại…"
-
+            "Chỉ biết mỗi lần cô ấy mỉm cười…",
+            "Trái tim tôi lại trót lỡ mất một nhịp."
         ];
-
 
         let current = 0;
 
@@ -286,152 +244,103 @@
         const button = document.getElementById("nextButton");
         const signature = document.getElementById("signature");
 
-
         /* ============================
            HIỆN CHỮ
         ============================ */
-
         function showMessage() {
-
             text.classList.remove("show");
 
             setTimeout(() => {
+                // Xóa class final trước khi cập nhật
+                text.classList.remove("final");
 
                 text.innerHTML = messages[current];
 
+                // Nếu là câu cuối cùng thì áp dụng class phong cách đặc biệt
                 if (current === messages.length - 1) {
                     text.classList.add("final");
                 }
 
                 text.classList.add("show");
-
-            }, 600);
+            }, 500);
         }
-
 
         /* ============================
            NÚT TIẾP TỤC
         ============================ */
-
         button.addEventListener("click", () => {
-
             current++;
 
             if (current >= messages.length) {
-
+                // Khi hết danh sách câu
                 button.style.display = "none";
-
                 signature.classList.add("show");
-
-                startHearts(25);
-
+                startHearts(40); // Bùng nổ tim bay
                 return;
             }
 
             showMessage();
 
+            // Thay đổi nhãn nút ở câu sát cuối
             if (current === messages.length - 1) {
-
-                button.innerHTML = "…";
-
+                button.innerHTML = "Xem điều cuối cùng…";
             }
-
         });
-
 
         /* ============================
            TIM BAY
         ============================ */
-
         function createHeart() {
-
             const heart = document.createElement("div");
-
             heart.className = "heart";
-
             heart.innerHTML = Math.random() > 0.5 ? "♥" : "♡";
 
-            heart.style.left =
-                Math.random() * 100 + "vw";
-
-            heart.style.setProperty(
-                "--move",
-                (Math.random() * 200 - 100) + "px"
-            );
-
-            heart.style.animationDuration =
-                (5 + Math.random() * 6) + "s";
-
-            heart.style.fontSize =
-                (12 + Math.random() * 25) + "px";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.setProperty("--move", (Math.random() * 200 - 100) + "px");
+            heart.style.animationDuration = (5 + Math.random() * 6) + "s";
+            heart.style.fontSize = (12 + Math.random() * 25) + "px";
 
             document.body.appendChild(heart);
 
             setTimeout(() => {
                 heart.remove();
-            }, 12000);
+            }, 11000);
         }
-
 
         function startHearts(amount = 1) {
-
             for (let i = 0; i < amount; i++) {
-
                 setTimeout(() => {
                     createHeart();
-                }, i * 150);
-
+                }, i * 120);
             }
         }
 
-
-        /* Tim tự động */
+        /* Tim rơi tự động rải rác */
         setInterval(() => {
-
-            if (Math.random() > 0.5) {
+            if (Math.random() > 0.4) {
                 createHeart();
             }
-
-        }, 800);
-
+        }, 700);
 
         /* ============================
            SAO TRÊN BẦU TRỜI
         ============================ */
-
         for (let i = 0; i < 80; i++) {
-
             const star = document.createElement("div");
-
             star.className = "star";
-
-            star.style.left =
-                Math.random() * 100 + "vw";
-
-            star.style.top =
-                Math.random() * 100 + "vh";
-
-            star.style.animationDelay =
-                Math.random() * 3 + "s";
-
+            star.style.left = Math.random() * 100 + "vw";
+            star.style.top = Math.random() * 100 + "vh";
+            star.style.animationDelay = Math.random() * 3 + "s";
             document.body.appendChild(star);
         }
-
 
         /* ============================
            KHỞI ĐỘNG
         ============================ */
-
         setTimeout(() => {
-
             text.innerHTML = messages[0];
-
             text.classList.add("show");
-
-        }, 1000);
-
+        }, 800);
     </script>
-
 </body>
 </html>
-```
